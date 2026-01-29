@@ -2,11 +2,19 @@ public class Trader extends Person{
     private int idTrader;
     private double capital;
     private Protfolio protfolio;
-    public Trader(String nom,String email,int idTrader,double capital){
+    public Trader(String nom,String email,int idTrader,double capital,Protfolio protfolio){
         super(nom,email);
         this.idTrader=idTrader;
         this.capital=capital;
-        this.protfolio=new Protfolio();
+        this.protfolio=protfolio;
+    }
+
+    public Protfolio getProtfolio() {
+        return protfolio;
+    }
+
+    public void setProtfolio(Protfolio protfolio) {
+        this.protfolio = protfolio;
     }
 
     public int getIdTrader() {
@@ -33,4 +41,12 @@ public class Trader extends Person{
 
     }
 
+    @Override
+    public String toString() {
+        return "Trader{" +
+                "idTrader=" + idTrader +
+                ", capital=" + capital +
+                ", protfolio=" + protfolio +
+                '}';
+    }
 }

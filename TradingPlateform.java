@@ -39,7 +39,6 @@ public class TradingPlateform {
         String typeActif=scanner.nextLine().toLowerCase();
 
 
-
         Asset asset;
         if(typeActif.equals("stock")){
             asset= new Stock(code,nom,prixUnitaire,quantite,typeActif);
@@ -57,30 +56,79 @@ public class TradingPlateform {
         }
         assets.add(asset);
 //        assets.stream().forEach(System.out::println);
+
+    }
+
+    public void afficherActifsDisponibles(){
+
+        if(assets.isEmpty()){
+            System.out.println("aucun actif n'est trouvé");
+
+        }
+
+        for(Asset asset:assets){
+            System.out.println("========Liste des actifs disponibles==========");
+            if(asset.getQuantite()>0){
+            System.out.println(asset);
+        }
+        }
+    }
+
+
+
+
+    public void ajouterTrader(){
+        Scanner scanner=new Scanner(System.in);
+
+        System.out.println("Entrez le nom du Trader :");
+        String nom = scanner.nextLine();
+
+        System.out.println("Entrez l'email du Trader :");
+        String email = scanner.nextLine();
+
+        System.out.println("Entrez l'id du Trader :");
+        int id = scanner.nextInt();
+
+        System.out.println("Entrez le capital du Trader :");
+        double capital = scanner.nextDouble();
+        Protfolio portfolio = new Protfolio(1);
+
+        Trader t = new Trader(nom,email,id,capital,portfolio);
+        //assigner portefeuille au trader:
+        portfolio.setTrader(t);
+        //donne au trader son portfolio
+        t.setProtfolio(portfolio);
+
+
+
+        traders.add(t);
+
+        System.out.println("Trader est ajouté avec succès!");
+
+    }
+    public void consulterPortfolio(){
+        System.out.println("Afficher les actifs détenus");
         for(Asset ast:assets){
-            System.out.println(ast);
+            System.out.println("le nom d'actif:"+ast.getNom()+"\n");
+//            System.out.println("le prix d'actif:"+ast.getPrixUnitaire()+"\n");
+//            System.out.println("la quantité d'actif"+ast.getQuantite()+"\n");
+            System.out.println(" le type d'actif:"+ast.getTypeActif()+"\n");
+            System.out.println("valeur totale:"+ast.calculerValeur());
+
         }
 
 
     }
 
-    public void ajouterTrader(){
-
-        Scanner scanner=new Scanner(System.in);
-        System.out.println("Entrez l'id du Trader");
-        int id=scanner.nextInt();
-        System.out.println("Entrez capital du trader");
-
-        double  capital=scanner.nextDouble();
-        Trader t = new Trader(id,capital);
-        traders.add(t);
-        System.out.println("Trader est ajouté avec succés");
-
-
-
-
-
+    public void afficherTrader(){
+        System.out.println("==================les traders qui s'existent=============");
+        for(Trader tr:traders){
+            System.out.println(tr);
+        }
     }
+
+
+
 
 
 }

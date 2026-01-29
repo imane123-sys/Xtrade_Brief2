@@ -1,7 +1,7 @@
 public class CryptoCurrencey extends Asset{
     private int currencyId;
-    public CryptoCurrencey(int code , String nom, double prixUnitaire,int currencyId,String typeActif){
-        super(code,nom,prixUnitaire,typeActif);
+    public CryptoCurrencey(int code ,String nom, double prixUnitaire,int quantite,String typeActif){
+        super( code , nom,  prixUnitaire, quantite, typeActif);
         this.currencyId=currencyId;
 
     }

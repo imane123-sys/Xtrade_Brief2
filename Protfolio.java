@@ -8,7 +8,7 @@ public class Protfolio <T extends Asset> {
     private ArrayList<T> assets;
 
 
-    public Protfolio(int  idProtfolio,Trader trader){
+    public Protfolio(int  idProtfolio ){
         this.idProtfolio=idProtfolio;
         this.trader=trader;
         this.assets=new ArrayList<>();
@@ -64,6 +64,14 @@ public class Protfolio <T extends Asset> {
         return total;
 
 }
+    @Override
+    public String toString() {
+        return "Protfolio{" +
+                "idProtfolio=" + idProtfolio +
+               ", nombreActifs=" + assets.size() +
+                '}';
+    }
+
 
 
 }

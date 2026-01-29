@@ -5,10 +5,12 @@ public abstract class Asset {
     private int quantite;
     private String typeActif;
 
-    public Asset(int code , String nom, double prixUnitaire,String typeActif){
+    public Asset(int code ,String nom, double prixUnitaire,int quantite,String typeActif){
         this.code=code;
         this.nom =nom;
         this.prixUnitaire=prixUnitaire;
+        this.quantite=quantite;
+        this.typeActif=typeActif;
 
     }
     public int getCode() {

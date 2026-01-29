@@ -1,7 +1,8 @@
 public class Stock extends Asset{
     private int StockId;
-    public Stock(int code , String nom, double prixUnitaire,int StockId,String typeActif){
-        super(code,nom,prixUnitaire,typeActif);
+    public Stock(int code ,String nom, double prixUnitaire,int quantite,String typeActif){
+        super( code , nom,  prixUnitaire, quantite, typeActif);
+        this.StockId=StockId;
     }
 
     public int getStockId() {
