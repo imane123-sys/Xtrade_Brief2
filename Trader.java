@@ -33,13 +33,21 @@ public class Trader extends Person{
         this.capital = capital;
     }
     public double  crediterSolde( double montant ){
-        return montant+=capital;
+        capital+=montant;
+        return capital;
 
     }
-    public double debiterSolde(double montant){
-        return montant-=capital;
+    public double debiterSolde(double montant) {
+        if (capital >= montant) {
+            capital -= montant;
 
+
+        } else {
+            System.out.println("montant insuffisantt");
+        }
+        return capital;
     }
+
 
     @Override
     public String toString() {

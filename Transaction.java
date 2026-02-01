@@ -5,11 +5,15 @@ public class Transaction {
     private int quantite;
     private double prixUnitaire;
     private LocalDateTime dateOperation ;
-    public Transaction(String typeTransaction, int quantite, double prixUnitaire){
+    private Trader trader;
+    private Asset asset;
+    public Transaction(String typeTransaction, int quantite, double prixUnitaire, Trader trader,Asset asset){
         this.typeTransaction=typeTransaction;
         this.quantite =quantite;
         this.prixUnitaire=prixUnitaire;
         this.dateOperation=LocalDateTime.now();
+        this.trader=trader;
+        this.asset=asset;
 
 
     }
@@ -40,6 +44,39 @@ public class Transaction {
     }
 
 
+    public LocalDateTime getDateOperation() {
+        return dateOperation;
+    }
 
+    public void setDateOperation(LocalDateTime dateOperation) {
+        this.dateOperation = dateOperation;
+    }
 
+    public Trader getTrader() {
+        return trader;
+    }
+
+    public void setTrader(Trader trader) {
+        this.trader = trader;
+    }
+
+    public Asset getAsset() {
+        return asset;
+    }
+
+    public void setAsset(Asset asset) {
+        this.asset = asset;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "typeTransaction='" + typeTransaction + '\'' +
+                ", quantite=" + quantite +
+                ", prixUnitaire=" + prixUnitaire +
+                ", dateOperation=" + dateOperation +
+                ", trader=" + trader +
+                ", asset=" + asset +
+                '}';
+    }
 }

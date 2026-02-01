@@ -19,6 +19,8 @@ public class TradingPlateform {
                     new CryptoCurrencey(7, "Binanance coin", 2000.0, 0, "crypto")
             )
     );
+    private ArrayList<Transaction>transactions=new ArrayList<>();
+
 
 
 
@@ -230,16 +232,8 @@ public class TradingPlateform {
 
         //
 
-        trader.debiterSolde(asset.getPrixUnitaire());
+        trader.crediterSolde(asset.getPrixUnitaire());
         trader.getProtfolio().getAssets().remove(asset);
-
-
-
-
-
-
-
-
 
 
 
