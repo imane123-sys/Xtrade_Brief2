@@ -132,6 +132,9 @@ public class TradingPlateform {
         traders.add(t);
 
         System.out.println("Trader est ajouté avec succès!");
+        for(Trader tr:traders){
+            System.out.println("les traders existés sont:"+tr);
+        }
 
     }
     public void consulterPortfolio(){
@@ -190,6 +193,14 @@ public class TradingPlateform {
                 System.out.println("l'achat est effectué avec succés");
             }
         }
+        Transaction transaction =new Transaction(
+                "Achat",
+                asset.getQuantite(),
+                asset.getPrixUnitaire(),
+                trader,
+                asset
+        );
+        transactions.add(transaction);
 
 
 
@@ -227,28 +238,77 @@ public class TradingPlateform {
         for(Asset ast:assets){
             if(ast.getCode()==codeActif){
                 asset=ast;
+                break;
             }
+        }
+        if(asset==null){
+            System.out.println("aucun actif trouvé de code");
+            return;
         }
 
         //
 
         trader.crediterSolde(asset.getPrixUnitaire());
         trader.getProtfolio().getAssets().remove(asset);
+        Transaction transaction = new Transaction(
+                "Vente",
+                asset.getQuantite(),
+                asset.getPrixUnitaire(),
+                trader,
+                asset
+
+                );
+        transactions.add(transaction);
+
 
 
 
 
 
     }
-    public void historiqueTransactions(){
+
+    public void afficherTransactions() {
+
+        if (transactions.isEmpty()) {
+            System.out.println("Aucune transaction enregistrée.");
+            return;
+        }
+
+        System.out.println("===== HISTORIQUE DES TRANSACTIONS =====");
+
+        for (Transaction t : transactions) {
+            System.out.println(t);
+        }
+    }
+    public void modifierPrixActifs(){
+        Scanner scanner =new Scanner(System.in);
+
+        afficherActifsDisponibles();
+        System.out.println("Entrez code d'actif ty peux changer");
+        int code =scanner.nextInt();
+        Asset asset =null;
+        for(Asset ast:assets){
+            if(ast.getCode()== code) {
+                asset=ast;
+            }
+        }
+        if(asset == null){
+            System.out.println("actif ne se trouve pas");
+        }
+        System.out.println("Entrez le nouveau prix");
+        double prix=scanner.nextDouble();
+        asset.setPrixUnitaire(prix);
+        System.out.println("prix moddifié avec succés");
+
+
+
+
+
+
+
 
     }
 
-    public void  afficherListeActif(){
-
-
-
-    }
 
 
 
