@@ -169,7 +169,12 @@ public class TradingPlateform {
             for(Trader tr:traders){
                 if(tr.getIdTrader()==id){
                     trader=tr;
+                    break;
                 }
+            }
+            if(trader == null){
+                System.out.println("Trader introuvable");
+                return;
             }
             //demander code d'actif
             afficherActifsDisponibles();
@@ -181,15 +186,23 @@ public class TradingPlateform {
             for(Asset ast:assets){
                 if(ast.getCode()==code){
                     asset=ast;
+                    break;
                 }
+            }
+            if(asset == null){
+                System.out.println("actif ne se trouve pas");
+                return;
             }
         //verifier si le capital est suffisant
         if (trader.getCapital() > asset.getPrixUnitaire()) {
             if (asset.getQuantite() > 0) {
                 // ajouter actif au portfolio
-                trader.getProtfolio().ajouterActif(asset);
-                //modifier le solde de trader
+//                trader.getProtfolio().ajouterActif(asset);
+//                //modifier le solde de trader
+//                trader.debiterSolde(asset.getPrixUnitaire());
                 trader.debiterSolde(asset.getPrixUnitaire());
+                trader.getProtfolio().ajouterActif(asset);
+                asset.setQuantite(asset.getQuantite() - 1);
                 System.out.println("l'achat est effectué avec succés");
             }
         }
@@ -220,13 +233,23 @@ public class TradingPlateform {
         for(Trader tr:traders){
             if(tr.getIdTrader()==idTrader){
                 trader=tr;
+                break;
             }
+        }
+        if(trader==null){
+            System.out.println("trader ne se trouve pas");
+            return;
         }
 
 
 
         //afficher les actifs
          ArrayList<Asset> assets =trader.getProtfolio().getAssets();
+        if(assets.isEmpty()){
+            System.out.println("votre portefeuille est vide");
+            return;
+        }
+        //afficher les actifs
         for(Asset ast:assets){
             System.out.println(ast);
         }
@@ -246,10 +269,21 @@ public class TradingPlateform {
             return;
         }
 
-        //
+        //demander quantité a vendre
+        System.out.println("Entrez la quantité a vendre");
+        int quantiteVendue=scanner.nextInt();
+        if(quantiteVendue <=0 || quantiteVendue >asset.getQuantite()){
+            System.out.println("quantité invalide");
+            return;
+        }
+        double montant= quantiteVendue * asset.getQuantite();
+        trader.crediterSolde(montant);
+        asset.setQuantite(asset.getQuantite() -quantiteVendue);
+        if(asset.getQuantite()==0){
+            trader.getProtfolio().getAssets().remove(asset);
+        }
 
-        trader.crediterSolde(asset.getPrixUnitaire());
-        trader.getProtfolio().getAssets().remove(asset);
+
         Transaction transaction = new Transaction(
                 "Vente",
                 asset.getQuantite(),
@@ -259,10 +293,7 @@ public class TradingPlateform {
 
                 );
         transactions.add(transaction);
-
-
-
-
+        System.out.println("Vente effectué avec succés");
 
 
     }
