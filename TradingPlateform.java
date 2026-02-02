@@ -137,26 +137,77 @@ public class TradingPlateform {
         }
 
     }
-    public void consulterPortfolio(){
-        System.out.println("Afficher les actifs détenus");
-        for(Asset ast:assets){
-            System.out.println("le nom d'actif:"+ast.getNom()+"\n");
-//            System.out.println("le prix d'actif:"+ast.getPrixUnitaire()+"\n");
-//            System.out.println("la quantité d'actif"+ast.getQuantite()+"\n");
-            System.out.println(" le type d'actif:"+ast.getTypeActif()+"\n");
-            System.out.println("valeur totale:"+ast.calculerValeur());
+//    public void consulterPortfolio(){
+//        System.out.println("Afficher les actifs détenus");
+//        for(Asset ast:assets){
+//            System.out.println("le nom d'actif:"+ast.getNom()+"\n");
+////            System.out.println("le prix d'actif:"+ast.getPrixUnitaire()+"\n");
+////            System.out.println("la quantité d'actif"+ast.getQuantite()+"\n");
+//            System.out.println(" le type d'actif:"+ast.getTypeActif()+"\n");
+//            System.out.println("valeur totale:"+ast.calculerValeur());
+//
+//        }
+//
+//
+//    }
+//
+//    public void afficherTrader(){
+//        System.out.println("==================les traders qui s'existent=============");
+//        for(Trader tr:traders){
+//            System.out.println(tr);
+//        }
+//    }
 
+    public void consulterPortfolio() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("================= Consulter le portefeuille =================");
+
+        // demander id trader
+        System.out.print("Entrez votre id : ");
+        int idTrader = scanner.nextInt();
+
+        // chercher trader
+        Trader trader = null;
+        for (Trader tr : traders) {
+            if (tr.getIdTrader() == idTrader) {
+                trader = tr;
+                break;
+            }
         }
 
-
-    }
-
-    public void afficherTrader(){
-        System.out.println("==================les traders qui s'existent=============");
-        for(Trader tr:traders){
-            System.out.println(tr);
+        if (trader == null) {
+            System.out.println("Trader introuvable !");
+            return;
         }
+
+        // récupérer portefeuille
+        ArrayList<Asset> assets = trader.getProtfolio().getAssets();
+
+        if (assets.isEmpty()) {
+            System.out.println("Portefeuille vide !");
+            return;
+        }
+
+        double valeurTotale = 0;
+
+        System.out.println("------------- Actifs détenus -------------");
+
+        for (Asset ast : assets) {
+            double valeurActif = ast.getPrixUnitaire() * ast.getQuantite();
+            valeurTotale += valeurActif;
+
+            System.out.println("Nom d'actif      : " + ast.getNom());
+            System.out.println("Type d'actif     : " + ast.getTypeActif());
+            System.out.println("Prix unitaire    : " + ast.getPrixUnitaire());
+            System.out.println("Quantité         : " + ast.getQuantite());
+            System.out.println("Valeur de l'actif: " + valeurActif);
+            System.out.println("------------------------------------------");
+        }
+
+        System.out.println("💰 Valeur totale du portefeuille : " + valeurTotale);
     }
+
 
     public void acheterActif(){
             Scanner scanner=new Scanner(System.in);
