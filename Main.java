@@ -42,7 +42,9 @@ public class Main {
             System.out.println("=========== Menu Admin ===========");
             System.out.println("1. Ajouter Actif");
             System.out.println("2. Modifier Prix Actifs");
-            System.out.println("3. Quitter");
+            System.out.println("====================Stream===================");
+            System.out.println("3.Afficher toutes les transactions d’un trader donné");
+            System.out.println("4. Quitter");
             System.out.print("Entrez un choix entre 1 et 3 : ");
             choix = scanner.nextInt();
 
@@ -54,12 +56,16 @@ public class Main {
                     p.modifierPrixActifs();
                     break;
                 case 3:
+                    p.afficherTransactionsTrader();
+                    break;
+                case 4:
                     System.out.println("Vous avez quitté le menu Admin");
+
                     break;
                 default:
                     System.out.println("Entrez un choix valide");
             }
-        } while (choix != 3);
+        } while (choix != 4);
     }
 
     public static void menuTrader(TradingPlateform p, Scanner scanner) {
@@ -103,6 +109,13 @@ public class Main {
             }
         } while (choix != 6);
     }
+
+
+
+
+
+
+
 }
 
 
