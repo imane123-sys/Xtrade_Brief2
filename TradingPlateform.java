@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TradingPlateform {
     private String plateformeName;
-    private ArrayList<Trader>traders=new ArrayList<>(
+    private ArrayList<Trader> traders=new ArrayList<>(
 
     );
     private ArrayList<Asset> assets = new ArrayList<>(
@@ -19,7 +19,7 @@ public class TradingPlateform {
                     new CryptoCurrencey(7, "Binanance coin", 2000.0, 0, "crypto")
             )
     );
-    private ArrayList<Transaction>transactions=new ArrayList<>();
+    private ArrayList<Transaction> transactions = new ArrayList<>();
 
 
 
@@ -205,7 +205,7 @@ public class TradingPlateform {
             System.out.println("------------------------------------------");
         }
 
-        System.out.println("💰 Valeur totale du portefeuille : " + valeurTotale);
+        System.out.println(" Valeur totale du portefeuille : " + valeurTotale);
     }
 
 
@@ -384,12 +384,33 @@ public class TradingPlateform {
 
 
 
-
-
-
-
-
     }
+
+
+    // ==============================================partie 2:Stream ==========================================
+
+public void afficherTransactionsTrader(){
+
+    Scanner scanner=new Scanner(System.in);
+    System.out.println("donnez l'id de trader");
+    int id=scanner.nextInt();
+    ArrayList<Transaction> transactiontrader =new ArrayList<>();
+    transactiontrader= (ArrayList<Transaction>) transactions.stream().filter(t-> t.getTrader().getIdTrader() == id).toList();
+
+
+
+
+
+
+
+}
+//public void filtrerTransactions(){
+//        transactions.stream()
+//                .filter(t->t.g)
+//
+//}
+
+
 
 
 
