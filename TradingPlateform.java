@@ -439,10 +439,10 @@ public void filtrerTransactions(){
 
     }else if(choix==2){
         System.out.println("Entrez le type d'actif");
-        String  typeActif= scanner.nextLine();
+        String  nomActif= scanner.nextLine();
         transactions.stream()
 
-                .filter(t->t.getAsset().getTypeActif().equalsIgnoreCase(typeActif))
+       .filter(t->t.getAsset().getNom().equalsIgnoreCase(nomActif))
         .forEach(n-> System.out.println(n));
 
 
@@ -453,7 +453,7 @@ public void filtrerTransactions(){
         System.out.println("====================================================================================");
         System.out.println("Entrez la date de debut (yyyy-mm-dd)");
         LocalDate dateDebut=LocalDate.parse(scanner.nextLine());
-        System.out.println("Entrez la date de debut (yyyy-mm-dd)");
+        System.out.println("Entrez la date de fin (yyyy-mm-dd)");
         LocalDate dateFin=LocalDate.parse(scanner.nextLine());
 
         transactions.stream().filter(t->{
