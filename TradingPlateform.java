@@ -1,10 +1,12 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class TradingPlateform {
     private String plateformeName;
-    private ArrayList<Trader> traders=new ArrayList<>(
+    private ArrayList<Trader>traders=new ArrayList<>(
 
     );
     private ArrayList<Asset> assets = new ArrayList<>(
@@ -19,7 +21,8 @@ public class TradingPlateform {
                     new CryptoCurrencey(7, "Binanance coin", 2000.0, 0, "crypto")
             )
     );
-    private ArrayList<Transaction> transactions = new ArrayList<>();
+    private ArrayList<Transaction>transactions=new ArrayList<>();
+    Scanner scanner=new Scanner(System.in);
 
 
 
@@ -389,14 +392,87 @@ public class TradingPlateform {
 
     // ==============================================partie 2:Stream ==========================================
 
-public void afficherTransactionsTrader(){
+    public void afficherTransactionsTrader() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("donnez l'id de trader");
+        int id = scanner.nextInt();
 
-    Scanner scanner=new Scanner(System.in);
-    System.out.println("donnez l'id de trader");
-    int id=scanner.nextInt();
-    ArrayList<Transaction> transactiontrader =new ArrayList<>();
-    transactiontrader= (ArrayList<Transaction>) transactions.stream().filter(t-> t.getTrader().getIdTrader() == id).toList();
+        List<Transaction> filteredT = transactions.stream().filter(t -> t.getTrader().getIdTrader() == id).toList();
 
+        if (filteredT.isEmpty()){
+            System.out.println("No transaction exist !!!");
+            return;
+        }
+
+        filteredT.forEach(t->
+                        System.out.println(t)
+                );
+
+
+//    transactions.stream()
+//            .filter(t->t.getTrader().getIdTrader()==(id))
+//            .forEach(System.out::println);
+
+
+    }
+public void filtrerTransactions(){
+    int choix=0;
+    System.out.println("===============Filtrage============================");
+    System.out.println("1.filtrer par type de transaction(achat,vente)");
+    System.out.println("2.filtrer par type d'actif");
+    System.out.println("3.filtrer par intervalle  de dates");
+    System.out.println("Entrez un choix entre 1 et 3");
+    choix= scanner.nextInt();
+    scanner.nextLine();
+    if(choix<1 || choix>3){
+        System.out.println("choix invalide");
+        return;
+    }
+    if(choix == 1) {
+        System.out.println("Entrez type de transaction (achat,vente)");
+        String type=scanner.nextLine();
+
+
+        transactions.stream()
+                .filter(t -> t.getTypeTransaction().equalsIgnoreCase(type))
+                .forEach(System.out::println);
+
+    }else if(choix==2){
+        System.out.println("Entrez le type d'actif");
+        String  typeActif= scanner.nextLine();
+        transactions.stream()
+
+                .filter(t->t.getAsset().getTypeActif().equalsIgnoreCase(typeActif))
+        .forEach(n-> System.out.println(n));
+
+
+
+    }
+    else if(choix==3){
+        System.out.println("=====================================Filtrage par date=============================");
+        System.out.println("====================================================================================");
+        System.out.println("Entrez la date de debut (yyyy-mm-dd)");
+        LocalDate dateDebut=LocalDate.parse(scanner.nextLine());
+        System.out.println("Entrez la date de debut (yyyy-mm-dd)");
+        LocalDate dateFin=LocalDate.parse(scanner.nextLine());
+
+        transactions.stream().filter(t->{
+            LocalDate dateTransaction=t.getDateOperation().toLocalDate();
+            return (dateTransaction.isEqual(dateDebut) || dateTransaction.isAfter(dateDebut)) &&
+                    (dateTransaction.isEqual(dateFin)   || dateTransaction.isBefore(dateFin));
+        })
+                .forEach(System.out::println);
+
+
+
+
+
+
+
+
+
+
+    }
 
 
 
@@ -404,9 +480,18 @@ public void afficherTransactionsTrader(){
 
 
 }
-//public void filtrerTransactions(){
-//        transactions.stream()
-//                .filter(t->t.g)
+//public void trierTransactions(){
+//        int choix=0;
+//    System.out.println("===============Triage============================");
+//    System.out.println("1.trier par date de transaction(achat,vente)");
+//    System.out.println("2.filtrer par montant");
+//    System.out.println("Entrez un ou deux");
+//    scanner.nextInt();
+//    if(choix ==1){
+//        transactions.stream().sorted(t->t.getDateOperation());
+//
+//    }
+//
 //
 //}
 
