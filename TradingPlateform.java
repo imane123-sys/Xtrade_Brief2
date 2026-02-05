@@ -1,8 +1,5 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class TradingPlateform {
     private String plateformeName;
@@ -465,13 +462,6 @@ public void filtrerTransactions(){
 
 
 
-
-
-
-
-
-
-
     }
 
 
@@ -480,20 +470,117 @@ public void filtrerTransactions(){
 
 
 }
-//public void trierTransactions(){
-//        int choix=0;
-//    System.out.println("===============Triage============================");
-//    System.out.println("1.trier par date de transaction(achat,vente)");
-//    System.out.println("2.filtrer par montant");
-//    System.out.println("Entrez un ou deux");
-//    scanner.nextInt();
-//    if(choix ==1){
-//        transactions.stream().sorted(t->t.getDateOperation());
+public void trierTransactions(){
+        int choix=0;
+    System.out.println("===============Triage============================");
+    System.out.println("1.trier par date de transaction(achat,vente)");
+    System.out.println("2.filtrer par montant");
+    System.out.println("Entrez un ou deux");
+    scanner.nextInt();
+    if(choix ==1){
+        transactions.stream().sorted(Comparator.comparing(Transaction::getDateOperation))
+                .forEach(System.out::println);
+
+    }
+    else if(choix==2){
+        transactions.stream().sorted(Comparator.comparing(Transaction::getPrixUnitaire))
+                .forEach(System.out::println);
+    }
+    else{
+        System.out.println("choix invalide");
+    }
+
+}
+
+
+public void calculerVolumeActif(){
+    System.out.println("Entrez code d'actif:");
+
+    int code=scanner.nextInt();
+    int quantiteTotal=0;
+       List<Transaction> transactionsActifs= transactions.stream().filter(t->t.getAsset().getCode()==code).toList();
+    quantiteTotal=transactionsActifs.stream().map(q->q.getQuantite())
+            .reduce(0,Integer::sum);
+
+    System.out.println(quantiteTotal);
+
+
+}
+public void calculerTotalAchatsEtVentes(){
+    System.out.println("entrez achat/vente");
+        String typeTransaction="achat";
+        typeTransaction=scanner.nextLine();
+        if(typeTransaction.equals("achat")) {
+
+            double totalAchats = transactions.stream().filter(t -> t.getTypeTransaction().equals("achat"))
+                    .mapToDouble(t -> t.getPrixUnitaire())
+                    .sum();
+            System.out.println("total des achats:"+totalAchats);
+
+        }else if(typeTransaction.equals("vente")) {
+            double totalVentes = transactions.stream().filter(t -> t.getTypeTransaction().equals("vente"))
+                    .mapToDouble(t -> t.getPrixUnitaire())
+                    .sum();
+            System.out.println("total des ventes:"+totalVentes);
+        }else{
+            System.out.println("Entrez vente ou achat pas plus");
+
+        }
+
+
+
 //
-//    }
-//
-//
-//}
+
+
+
+
+}
+//Analyse de performance par trader
+public void VolumeTotalTrader(){
+    System.out.println("Entrez le nom de trader:");
+    String nomTrader=scanner.nextLine();
+
+     boolean isTrader=traders.stream().anyMatch(t->t.getNom().equals(nomTrader));
+     if(!isTrader){
+         System.out.println("le trader n'existe pas");
+         return;
+     }
+     int totalQuantite=transactions.stream().filter(t->t.getTrader().getNom().equals(nomTrader))
+             .mapToInt(q->q.getQuantite())
+             .sum();
+    System.out.println("volume total échangé par trader est"+totalQuantite);
+
+
+
+
+
+
+
+
+
+
+}
+
+    public void NombreTotalOrders(){
+
+
+    }
+    public void ClassementTraderVolume(){
+
+    }
+    //Analyse globale du marché simulé
+    public void totalInstrumentFinancier(){
+
+    }
+    public void InstrumentPlusEchange(){
+
+    }
+    public void CalculAchatsVentesMarche(){
+
+    }
+
+
+
 
 
 
