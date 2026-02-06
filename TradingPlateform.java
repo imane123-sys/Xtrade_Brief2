@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TradingPlateform {
     private String plateformeName;
@@ -559,13 +560,34 @@ public void VolumeTotalTrader(){
 
 
 
+
 }
 
     public void NombreTotalOrders(){
+        System.out.println("Entrez id de trader pour calculer total des orders");
+        int id=scanner.nextInt();
+
+        long total =transactions.stream().filter(t->t.getTrader().getIdTrader()==(id)).count();
+        System.out.println("nombre total d'ordres"+total);
+
+
+
 
 
     }
     public void ClassementTraderVolume(){
+        Map<Trader, Integer> volumeParTrader =
+                transactions.stream()
+                        .collect(Collectors.groupingBy(
+                                Transaction::getTrader,
+                                Collectors.summingInt(Transaction::getQuantite)
+                        ));
+
+        volumeParTrader.forEach((trader, volume) ->
+                System.out.println(trader.getNom() + " -> " + volume));
+
+
+
 
     }
     //Analyse globale du marché simulé
