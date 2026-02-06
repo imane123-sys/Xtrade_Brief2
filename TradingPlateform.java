@@ -576,28 +576,76 @@ public void VolumeTotalTrader(){
 
     }
     public void ClassementTraderVolume(){
-        Map<Trader, Integer> volumeParTrader =
-                transactions.stream()
-                        .collect(Collectors.groupingBy(
-                                Transaction::getTrader,
-                                Collectors.summingInt(Transaction::getQuantite)
-                        ));
-
-        volumeParTrader.forEach((trader, volume) ->
-                System.out.println(trader.getNom() + " -> " + volume));
-
-
-
+        System.out.println("Entrez Top N traders : ");
+        int N = scanner.nextInt();
+        Map<Trader,Integer>traderVolume=new HashMap<>();
+        transactions.forEach(t->{
+            traderVolume.put(t.getTrader()/*key*/,traderVolume.getOrDefault(t.getTrader(),t.getQuantite())+t.getQuantite(/*valuer avec condition*/));
+           }
+        );
+        traderVolume.entrySet().stream().sorted((a, b) -> b.getValue() - a.getValue())
+                .limit(N)
+                 .forEach(e ->
+                System.out.println(
+                        e.getKey().getNom() + " -> " + e.getValue()
+                ));
 
     }
     //Analyse globale du marché simulé
     public void totalInstrumentFinancier(){
+        System.out.println("Entrez le nom de l'actif:");
+        String nomActif= scanner.nextLine();
+        int total=transactions.stream()
+                .filter(t->t.getAsset().getNom().equalsIgnoreCase(nomActif))
+                .mapToInt(t->t.getQuantite())
+                .sum();
+        System.out.println("volume total d'actif"+total);
+
+
+
 
     }
     public void InstrumentPlusEchange(){
 
+        System.out.println("Instrument le plus échangé ");
+        Map<Trader,Integer>traderVolume=new HashMap<>();
+        transactions.forEach(t->{
+                    traderVolume.put(t.getTrader()/*key*/,traderVolume.getOrDefault(t.getTrader(),t.getQuantite())+t.getQuantite(/*valuer avec condition*/));
+                }
+        );
+        traderVolume.entrySet().stream().sorted((a, b) -> b.getValue() - a.getValue())
+                .limit(1)
+                .forEach(e ->
+                        System.out.println(
+                               "le top trader est"+ e.getKey().getNom() + " -> " + e.getValue()
+
+                        ));
+
+
     }
     public void CalculAchatsVentesMarche(){
+        System.out.println("__  total des achats et des ventes:__");
+
+        if (transactions.isEmpty()) {
+            System.out.println("Aucune transaction enregistrée.");
+            return;
+        }
+
+        int totalAchat = 0;
+        int totalVente = 0;
+
+        for (Transaction t : transactions) {
+            if (t.getTypeTransaction().equalsIgnoreCase("achat")) {
+                totalAchat += t.getQuantite();
+            } else if (t.getTypeTransaction().equalsIgnoreCase("vente")) {
+                totalVente += t.getQuantite();
+            }
+        }
+
+        System.out.println("Total  Achats :  "+ totalAchat);
+        System.out.println("Total  Ventes :  "+totalVente);
+        System.out.println("____________________________________________________________________");
+
 
     }
 
